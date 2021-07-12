@@ -9,10 +9,13 @@ node {
       // **       in the global configuration.           
    }
    stage('Build') {
-        sh("docker build -t yarashehab/angularapp:v1.0 .")
-        sh("docker login --username yarashehab --password yara71997")  
-        sh("docker push yarashehab/angularapp:v1.0")
+       sh("docker build -t yarashehab/angularapp:v1.0 .")
   }
+   stage('tag and push')
+   {
+       sh("docker login --username yarashehab --password yara71997")  
+       sh("docker push yarashehab/angularapp:v1.0")
+   }
    stage('Transfer files and deploy'){
        sh("gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project coffee-fpal")
        sh("kubectl apply -f deployment.yaml")
