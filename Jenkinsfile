@@ -9,10 +9,10 @@ node {
       // **       in the global configuration.           
    }
    stage('Build') {
-        sh("docker build -t myapp .")
+        sh("docker build -t angularapp .")
   }
     stage('Tag and Push Image to GITHUB'){
-       sh("docker tag myapp  $REG:$BRANCH_NAME$BUILD_NUMBER")
+       sh("docker tag angularapp  $REG:$BRANCH_NAME$BUILD_NUMBER")
        sh("docker tag $REG:$BUILD_NUMBER $REG:latest")
        sh("docker push $REG:$BUILD_NUMBER")
        sh("docker push $REG:latest")
@@ -20,6 +20,6 @@ node {
    stage('Transfer files and deploy'){
        sh("gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project coffee-fpal")
        sh("kubectl apply -f deployment.yaml")
-       sh("kubectl set image deployment/myapp myapp=$REG:$BUILD_NUMBER")
+       sh("kubectl set image deployment/angularapp angularapp=$REG:$BUILD_NUMBER")
    }
 }
