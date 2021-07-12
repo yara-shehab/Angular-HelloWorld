@@ -17,10 +17,6 @@ node {
        sh("docker push yarashehab/angularapp:v1.0")
    }
    stage('Transfer files and deploy'){
-      sh("curl -o /tmp/google-cloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-225.0.0-linux-x86_64.tar.gz")
-      sh("tar -xvf /tmp/google-cloud-sdk.tar.gz -C /tmp/")
-      sh("./google-cloud-sdk/install.sh")
-      sh("./google-cloud-sdk/bin/gcloud init")
       sh("gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project coffee-fpal")
       sh("kubectl apply -f deployment.yaml")
       sh("kubectl set image deployment/angularapp angularapp=$REG:$BUILD_NUMBER")
