@@ -21,9 +21,9 @@ node {
       container('gcloud') {
         sh "gcloud compute zones --help"
       }
-    }
+    
 
-  }
+  
 
    stage('Transfer files and deploy'){
       sh("gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project coffee-fpal")
