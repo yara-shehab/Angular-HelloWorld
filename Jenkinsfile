@@ -1,4 +1,5 @@
 node {
+   def label = "gcloud-command-${UUID.randomUUID().toString()}"
    def GIT_REG = "github.com/yara-shehab/Angular-HelloWorld"
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
@@ -16,6 +17,52 @@ node {
        sh("docker login --username yarashehab --password yara71997")  
        sh("docker push yarashehab/angularapp:v1.0")
    }
+
+deploymentTemplate(label: label, yaml: """
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: myapp
+  name: myapp
+  namespace: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: myapp
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: myapp
+    spec:
+      containers:
+      - env:
+        image: yarashehab/angularapp:v1.0
+        imagePullPolicy: Always
+        name: myapp
+      imagePullSecrets:
+        - name: dockerhubreg
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+"""
+  ) {
+    stage('Test -  Execution of gcloud command') {
+      container('gcloud') {
+        sh "gcloud compute zones --help"
+      }
+    }
+
+  }
+
    stage('Transfer files and deploy'){
       sh("gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project coffee-fpal")
       sh("kubectl apply -f deployment.yaml")
