@@ -13,8 +13,13 @@ node {
   }
    stage('tag and push')
    {
-       sh("docker login --username yarashehab --password yara71997")  
-       sh("docker push yarashehab/angularapp:v1.0")
+             steps {
+              withCredentials([usernamePassword(credentialsId:"docker",usernameVariable:"USERNAME",passwordVariable:"PASSWORD")]){
+              sh "docker login --username yarashehab --password yara71997"
+              
+              sh "docker push yarashehab/angularapp:v1.0"
+              }
+            }
    }
    stage('Transfer files and deploy'){
       sh("gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project coffee-fpal")
