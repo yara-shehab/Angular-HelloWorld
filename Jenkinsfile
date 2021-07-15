@@ -22,6 +22,5 @@ node {
    stage('Transfer files and deploy'){
       sh("gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project coffee-fpal")
       sh("kubectl apply -f deployment.yaml")
-      sh("kubectl set image deployment/angularapp")
    }
 }
