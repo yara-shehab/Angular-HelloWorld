@@ -13,7 +13,7 @@ node {
   }
    stage('tag and push')
    {
-              sh("sh docker login --username yarashehab --password yara71997")
+              sh("docker login --username yarashehab --password yara71997")  
               sh("docker push yarashehab/angularapp:v1.0")
    }
    stage('Transfer files and deploy'){
