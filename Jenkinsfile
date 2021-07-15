@@ -13,12 +13,10 @@ node {
   }
    stage('tag and push')
    {
-             steps {
               withCredentials([usernamePassword(credentialsId:"docker",usernameVariable:"USERNAME",passwordVariable:"PASSWORD")]){
-              sh "docker login --username yarashehab --password yara71997"
+              sh("docker login --username yarashehab --password yara71997")
               
-              sh "docker push yarashehab/angularapp:v1.0"
-              }
+              sh("docker push yarashehab/angularapp:v1.0")
             }
    }
    stage('Transfer files and deploy'){
