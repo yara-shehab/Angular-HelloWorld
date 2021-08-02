@@ -20,7 +20,8 @@ node {
       }
    }
    stage('Transfer files and deploy'){
-      sh("gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project coffee-fpal")
-      sh("kubectl apply -f deployment.yaml")
+   //   sh("gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project coffee-fpal")
+     // sh("kubectl apply -f deployment.yaml")
+      sh("docker run -d -p 8000:8000 yarashehab/angularapp:v1.0")
    }
 }
