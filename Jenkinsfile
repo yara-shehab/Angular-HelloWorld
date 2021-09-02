@@ -3,7 +3,9 @@ pipeline {
     stages {
         stage("Checkout LDP code") {
             steps {
-                checkout scm
+                sh("git clone https://github.com/yara-shehab/Angular-HelloWorld")
+                sh("cd Angular-HelloWorld")
+                
             }
         }
         stage("Buildimage") {
