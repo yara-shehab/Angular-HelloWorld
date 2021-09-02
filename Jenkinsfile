@@ -1,6 +1,5 @@
 pipeline {
     agent any
-   def GIT_REG = "github.com/yara-shehab/Angular-HelloWorld"
     stages {
       stage('Preparation') { // for display purposes
          // Get some code from a GitHub repository
