@@ -10,9 +10,8 @@ pipeline {
         }
         stage("Buildimage") {
            steps {
-               script {
-                   frontend = docker.build("yarashehab/angularapp:v1.0","-f ./Dockerfile .")
-                }
+                   docker.build("yarashehab/angularapp:v1.0","-f ./Dockerfile .")
+
            }
         }
 
